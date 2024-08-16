@@ -4,7 +4,9 @@
   "description": "Url Shortner Application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles",
+    "db:init": "node scripts\\init-database.js",
+    "db:migrate": "node scripts\\init-tables.js"
   },
   "keywords": [],
   "author": "",

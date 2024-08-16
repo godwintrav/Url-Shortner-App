@@ -36,6 +36,7 @@ export function getConnectionPool(isDbInit = false) {
   return connectionPool;
 }
 
+//get connection from pool
 export async function getConnection() {
   return await getConnectionPool().getConnection();
 }

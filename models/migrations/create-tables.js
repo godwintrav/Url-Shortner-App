@@ -2,6 +2,7 @@ import { getConnection } from "../../config/connection.js";
 
 export const createTables = async () => {
   try {
+    //get connection form database connection pool singleton
     const connection = await getConnection();
     await connection.query(`
       CREATE TABLE url_mappings (
@@ -25,6 +26,8 @@ export const createTables = async () => {
         FOREIGN KEY (url_id) REFERENCES url_mappings(id) ON DELETE CASCADE
       );
       `);
+
+    //release connection after query to prevent memory leaks
     connection.release();
   } catch (err) {
     console.error("Error creating tableS:", err);

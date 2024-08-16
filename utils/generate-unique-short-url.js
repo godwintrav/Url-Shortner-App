@@ -5,6 +5,7 @@ export async function generateUniqueUrl() {
   let generatedUUID = "";
   let isUnique = false;
 
+  //loop to genrate unique short url and check if exists or not
   while (isUnique == false) {
     generatedUUID = randomUUID().slice(0, 6);
     const existingData = await getUrl(generatedUUID);

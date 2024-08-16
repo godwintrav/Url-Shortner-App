@@ -1,5 +1,6 @@
 import { createDatabase } from "../models/migrations/create-database.js";
 
+//script for initialising database
 (async () => {
   try {
     await createDatabase();

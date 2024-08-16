@@ -9,7 +9,10 @@ import * as createShortUrlModule from "../services/create-url-service.js";
 import * as getLongUrlModule from "../services/get-url-service.js";
 
 describe("server.js", () => {
+  // set isTest environment variable to help set test database when creating database
   process.env.isTest = true;
+
+  //set test ipaddress
   const testIpAddress = "::ffff:127.0.0.1";
   const unexpectedErrorMsg = "Unexpected Error";
   const randomUrl = "random";
@@ -28,6 +31,7 @@ describe("server.js", () => {
   });
 
   afterEach(() => {
+    //restore all mocks to original state after each test block
     jest.restoreAllMocks();
   });
 
@@ -42,6 +46,7 @@ describe("server.js", () => {
       const short_url = postResponse.body.short_url.slice(-6);
       const getResponse = await request(app).get(`/${short_url}`).expect(302);
 
+      //assert headers location is changed after redirect
       expect(getResponse.headers.location).toEqual(body.longUrl);
     });
 
@@ -56,6 +61,7 @@ describe("server.js", () => {
     });
 
     it("should return 500 internal server error if unexpected error occurs", async () => {
+      //mock getLongUrl Function to throw an unexpected error
       const getLongUrlModuleSpy = jest
         .spyOn(getLongUrlModule, "getLongUrl")
         .mockImplementation(() => {
@@ -68,6 +74,7 @@ describe("server.js", () => {
           error: unexpectedErrorMsg,
         })
       );
+      //assert how many times mock getLongUrl function was called and what parameters were passed
       expect(getLongUrlModuleSpy).toBeCalledTimes(1);
       expect(getLongUrlModuleSpy).toBeCalledWith(randomUrl, testIpAddress);
     });
@@ -122,6 +129,7 @@ describe("server.js", () => {
     });
 
     it("should return 500 internal server error if unexpected error occurs", async () => {
+      //mock createShortUrl Function to throw an unexpected error
       const createShortUrlModuleSpy = jest
         .spyOn(createShortUrlModule, "createShortUrl")
         .mockImplementation(() => {
@@ -139,6 +147,7 @@ describe("server.js", () => {
           error: unexpectedErrorMsg,
         })
       );
+      //assert how many times mock createShortUrl function was called and what parameters were passed
       expect(createShortUrlModuleSpy).toBeCalledTimes(1);
       expect(createShortUrlModuleSpy).toBeCalledWith(
         body.longUrl,

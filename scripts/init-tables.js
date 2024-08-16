@@ -1,5 +1,6 @@
 import { createTables } from "../models/migrations/create-tables.js";
 
+//script for initialising tables
 (async () => {
   try {
     await createTables();

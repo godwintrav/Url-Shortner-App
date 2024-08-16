@@ -38,7 +38,7 @@ export function getConnectionPool(isDbInit = false) {
       });
     }
   } else {
-    //if this is database initialization create a connection pool without any database specified
+    //if this is database initialization create a connection pool to host without any database specified
     return mysql.createPool(configObject);
   }
 
